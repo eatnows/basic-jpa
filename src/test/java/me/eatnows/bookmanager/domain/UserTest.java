@@ -14,7 +14,7 @@ class UserTest {
         user.setEmail("eatnows@email.com");
         user.setName("eatnows");
 
-        User user1 = new User(null, "eatnows", "eatnows@email.com", LocalDateTime.now(), LocalDateTime.now());
+//        User user1 = new User(null, "eatnows", "eatnows@email.com", LocalDateTime.now(), LocalDateTime.now(), null);
         User user2 = new User("eatnows", "eatnows@email.com");
 
         System.out.println(">>> " + user);

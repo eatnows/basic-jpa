@@ -6,14 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
-import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.endsWith;
 
 @SpringBootTest
 class UserRepositoryTest {
@@ -101,4 +97,44 @@ class UserRepositoryTest {
         userRepository.findAll(example).forEach(System.out::println);
     }
 
+    @Test
+    void select() {
+        System.out.println(userRepository.findByName("apple"));
+
+        System.out.println("findByEmail : " + userRepository.findByEmail("eatnows@email.com"));
+        System.out.println("getByEmail : " + userRepository.getByEmail("eatnows@email.com"));
+        System.out.println("readByEmail : " + userRepository.readByEmail("eatnows@email.com"));
+        System.out.println("queryByEmail : " + userRepository.queryByEmail("eatnows@email.com"));
+        System.out.println("searchByEmail : " + userRepository.searchByEmail("eatnows@email.com"));
+        System.out.println("streamByEmail : " + userRepository.streamByEmail("eatnows@email.com"));
+        System.out.println("findUserByEmail : " + userRepository.findUserByEmail("eatnows@email.com"));
+
+        System.out.println("findUserByEmail : " + userRepository.findSomethingByEmail("eatnows@email.com"));
+
+        System.out.println("findTop2ByName : " + userRepository.findTop2ByName("eatnows"));
+        System.out.println("findFirst2ByName : " + userRepository.findFirst2ByName("eatnows"));
+
+        System.out.println("findByEmailAndName : " + userRepository.findByEmailAndName("eatnows@email.com", "eatnows"));
+        System.out.println("findByEmailOrName : " + userRepository.findByEmailOrName("eatnows@email.com", "apple"));
+
+        System.out.println("findByCreatedAtAfter : " + userRepository.findByCreatedAtAfter(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByIdAfter : " + userRepository.findByIdAfter(4L));
+        System.out.println("findByCreatedAtGreaterThan : " + userRepository.findByCreatedAtGreaterThan(LocalDateTime.now().minusDays(1L)));
+        System.out.println("findByCreatedAtGreaterThanEqual : " + userRepository.findByCreatedAtGreaterThanEqual(LocalDateTime.now().minusDays(1L)));
+
+        System.out.println("findByCreatedAtBetween : " + userRepository.findByCreatedAtBetween(LocalDateTime.now().minusDays(1L), LocalDateTime.now().plusDays(1L)));
+        System.out.println("findByIdAtBetween : " + userRepository.findByIdBetween(1L, 3L));
+        System.out.println("findByIdGreaterThanEqualAndIdLessThanEqual : " + userRepository.findByIdGreaterThanEqualAndIdLessThanEqual(1L, 3L));
+
+        System.out.println("findByIdIsNotNull : " + userRepository.findByIdIsNotNull());
+//        System.out.println("findByAddressIsNotEmpty : " + userRepository.findByAddressIsNotEmpty());
+
+        System.out.println("findByNameIn : " + userRepository.findByNameIn(Lists.newArrayList("eatnows", "apple")));
+
+        System.out.println("findByNameStartingWith : " + userRepository.findByNameStartingWith("eat"));
+        System.out.println("findByNameEndingWith : " + userRepository.findByNameEndingWith("ows"));
+        System.out.println("findByNameContains : " + userRepository.findByNameContains("atn"));
+
+        System.out.println("findByNameLike : " + userRepository.findByNameLike("%tno%"));
+    }
 }
