@@ -137,4 +137,13 @@ class UserRepositoryTest {
 
         System.out.println("findByNameLike : " + userRepository.findByNameLike("%tno%"));
     }
+
+    @Test
+    void pagingAndSortingTest() {
+        System.out.println("findTop1ByName : " + userRepository.findTop1ByName("eatnows"));
+//        System.out.println("findLast1ByName : " + userRepository.findLast1ByName("eatnows"));
+        System.out.println("findTopByNameOrderIdDesc : " + userRepository.findTopByNameOrderByIdDesc("eatnows"));
+        System.out.println("findFirstByNameOrderByIdDescEmailAsc : " + userRepository.findFirstByNameOrderByIdDescEmailAsc("eatnows"));
+        System.out.println("findFirstByNameWithSortParams : " + userRepository.findFirstByName("eatnows", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
+    }
 }
