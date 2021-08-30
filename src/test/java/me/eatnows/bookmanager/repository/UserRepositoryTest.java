@@ -145,5 +145,7 @@ class UserRepositoryTest {
         System.out.println("findTopByNameOrderIdDesc : " + userRepository.findTopByNameOrderByIdDesc("eatnows"));
         System.out.println("findFirstByNameOrderByIdDescEmailAsc : " + userRepository.findFirstByNameOrderByIdDescEmailAsc("eatnows"));
         System.out.println("findFirstByNameWithSortParams : " + userRepository.findFirstByName("eatnows", Sort.by(Sort.Order.desc("id"), Sort.Order.asc("email"))));
+        System.out.println("findByNameWithPaging : " + userRepository.findByName("eatnows", PageRequest.of(1, 1, Sort.by(Sort.Order.desc("id")))).getContent());
+
     }
 }
