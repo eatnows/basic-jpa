@@ -176,4 +176,27 @@ class UserRepositoryTest {
 
         System.out.println(userRepository.findRawRecord().get("gender"));
     }
+
+    @Test
+    void prePersistTest() {
+        User user = new User();
+        user.setEmail("eatnows2@email.com");
+        user.setName("eatnows");
+
+        userRepository.save(user);
+
+        System.out.println(userRepository.findByEmail("eatnows2@email.com"));
+    }
+
+    @Test
+    void preUpdateTest() {
+        User user = userRepository.findById(1L).orElseThrow(RuntimeException::new);
+
+        System.out.println("as-is : " + user);
+
+        user.setName("eatnows22");
+        userRepository.save(user);
+
+        System.out.println("to-be : " + userRepository.findAll().get(0));
+    }
 }

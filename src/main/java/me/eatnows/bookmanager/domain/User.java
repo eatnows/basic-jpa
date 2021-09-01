@@ -1,21 +1,24 @@
 package me.eatnows.bookmanager.domain;
 
 import lombok.*;
+import me.eatnows.bookmanager.domain.listener.Auditable;
+import me.eatnows.bookmanager.domain.listener.MyEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Data
+@ToString(callSuper = true)
 @Builder
 @Entity(name = "USER")
 @Table(name = "USER")
+@EntityListeners(value = {MyEntityListener.class})
 //@Table(name = "USER", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 // index나 constratraint를 jPA에서 설정했다고해서 실제 db에서는 존재하지 않는 index를 활용한 쿼리등 사용할 수 없다.
-public class User {
+public class User extends BaseEntity implements Auditable {
     @Id
     @GeneratedValue
     private Long id;
@@ -42,4 +45,14 @@ public class User {
 //    @OneToMany(fetch = FetchType.EAGER)
 //    private List<Address> address;
 
+//    @PrePersist
+//    public void prePersist() {
+//        this.createdAt = LocalDateTime.now();
+//        this.updatedAt = LocalDateTime.now();
+//    }
+//
+//    @PreUpdate
+//    public void preUpdate() {
+//        this.updatedAt = LocalDateTime.now();
+//    }
 }
