@@ -17,6 +17,8 @@ class UserRepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserHistoryRepository userHistoryRepository;
 
     @Test
     void crud() {
@@ -198,5 +200,20 @@ class UserRepositoryTest {
         userRepository.save(user);
 
         System.out.println("to-be : " + userRepository.findAll().get(0));
+    }
+
+    @Test
+    void userHistoryTest() {
+        User user = new User();
+        user.setEmail("eatnows@email.com");
+        user.setName("eatnows-new");
+
+        userRepository.save(user);
+
+        user.setName("eatnows-new-new");
+
+        userRepository.save(user);
+
+        userHistoryRepository.findAll().forEach(System.out::println);
     }
 }
