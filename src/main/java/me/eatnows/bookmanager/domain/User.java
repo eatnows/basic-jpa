@@ -23,9 +23,9 @@ import java.time.LocalDateTime;
 @EntityListeners(value = {UserEntityListener.class})
 //@Table(name = "USER", indexes = {@Index(columnList = "name")}, uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 // index나 constratraint를 jPA에서 설정했다고해서 실제 db에서는 존재하지 않는 index를 활용한 쿼리등 사용할 수 없다.
-public class User extends BaseEntity implements Auditable {
+public class User extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull
