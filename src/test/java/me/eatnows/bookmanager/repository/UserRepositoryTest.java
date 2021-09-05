@@ -233,7 +233,7 @@ class UserRepositoryTest {
         user.setEmail("daniel@email.com");
         userRepository.save(user);
 
-//        userHistoryRepository.findAll().forEach(System.out::println);
+        userHistoryRepository.findAll().forEach(System.out::println);
 
 //        List<UserHistory> result = userHistoryRepository.findByUserId(
 //                userRepository.findByEmail("daniel@email.com").getId());
@@ -241,5 +241,7 @@ class UserRepositoryTest {
         List<UserHistory> result = userRepository.findByEmail("daniel@email.com").getUserHistories();
 
         result.forEach(System.out::println);
+
+        System.out.println("UserHistory.getUser() : " + userHistoryRepository.findAll().get(0).getUser());
     }
 }

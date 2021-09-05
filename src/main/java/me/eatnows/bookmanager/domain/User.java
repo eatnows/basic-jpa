@@ -46,6 +46,11 @@ public class User extends BaseEntity {
     // nullPointerException이 발생할 수 있기 때문에 기본 생성자를 넣어주는 것이 좋다. JPA에서는 조회할때 기본적으로 생성이 되지만 값을 삽입할때 널포인터 이셉션이 발생할 수 있다.
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", insertable = false, updatable = false) // readOnly
+    @ToString.Exclude
     private final List<UserHistory> userHistories = new ArrayList<>();
 
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    @ToString.Exclude
+    private List<Review> reviews = new ArrayList<>();
 }

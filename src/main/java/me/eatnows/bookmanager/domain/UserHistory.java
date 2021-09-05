@@ -25,11 +25,13 @@ public class UserHistory extends BaseEntity implements Auditable {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "USER_ID")
-    private Long userId;
+//    @Column(name = "USER_ID", insertable = false, updatable = false)
+//    private Long userId;
 
     private String name;
 
     private String email;
 
+    @ManyToOne
+    private User user;
 }
