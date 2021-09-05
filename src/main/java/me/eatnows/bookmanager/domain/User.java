@@ -10,6 +10,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -37,29 +39,13 @@ public class User extends BaseEntity {
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
 
-//    @Column(updatable = false)
-//    @CreatedDate
-//    private LocalDateTime createdAt;
-//
-//    @Column
-//    @LastModifiedDate
-//    private LocalDateTime updatedAt;
+//    @Transient // 영속성 처리에서 제외가 되기때문에 DB 데이터에 반영되지 않고 해당 객체와 생명주기를 같이 하는 값이 된다.
+//    // db에 반영하지 않고 사용하고 싶은 object 속성의 데이터
+//    private String testData;
 
-    @Transient // 영속성 처리에서 제외가 되기때문에 DB 데이터에 반영되지 않고 해당 객체와 생명주기를 같이 하는 값이 된다.
-    // db에 반영하지 않고 사용하고 싶은 object 속성의 데이터
-    private String testData;
+    // nullPointerException이 발생할 수 있기 때문에 기본 생성자를 넣어주는 것이 좋다. JPA에서는 조회할때 기본적으로 생성이 되지만 값을 삽입할때 널포인터 이셉션이 발생할 수 있다.
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false) // readOnly
+    private final List<UserHistory> userHistories = new ArrayList<>();
 
-//    @OneToMany(fetch = FetchType.EAGER)
-//    private List<Address> address;
-
-//    @PrePersist
-//    public void prePersist() {
-//        this.createdAt = LocalDateTime.now();
-//        this.updatedAt = LocalDateTime.now();
-//    }
-//
-//    @PreUpdate
-//    public void preUpdate() {
-//        this.updatedAt = LocalDateTime.now();
-//    }
 }
