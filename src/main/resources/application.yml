@@ -8,6 +8,18 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop   # 스키마.sql 파일이 있으면 스키마.sql 파일의 우선순위가 높아 ddl-auto는 무시된다.
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/book_manager
+    username: root
+    password: password
+
+  sql:
+    init:
+      mode: always  # embeded db의 경우 자동으로 되어있지만(embeded 모드) mysql의 경우 resource 밑에 sql 파일을 사용할 경우 추가해주어야함
 
 #  logging:
 #    level:
