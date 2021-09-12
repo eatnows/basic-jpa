@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 import static org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers.contains;
 
 @SpringBootTest
+@Transactional // 각 테스트 메서드가 종료될 때 마다 처리했던 데이터들을 롤백
 class UserRepositoryTest {
 
     @Autowired
