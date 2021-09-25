@@ -59,7 +59,7 @@ class BookReviewInfoRepositoryTest {
 
     private void givenBookReviewInfo() {
         BookReviewInfo bookReviewInfo = new BookReviewInfo();
-//        bookReviewInfo.setBookId(1L);
+//        bookReviewI nfo.setBookId(1L);
         bookReviewInfo.setBook(givenBook());
         bookReviewInfo.setAverageReviewScore(4.5F);
         bookReviewInfo.setReviewCount(2);
