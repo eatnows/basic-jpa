@@ -39,3 +39,12 @@ embeded db (h2)를 사용할 경우 `ddl-auto`옵션이 create-drop 으로 기�
 
 #### 삭제상태 (remove)
 삭제를 하게되면 해당 엔티티는 더이상 사용할 수 없다.
+
+
+
+## Transaction
+### Unchecked Exception (RuntimeException)
+Transaction내에서 UncheckedException이 발생할 경우 rollback이 이루어진다. (try-catch로 핸들링 하여도 기본적으로는 rollback을 수행한다.)
+
+### Checked Exception (Exception)
+Transaction내에서 CheckedException이 발생할 경우 강제된 핸들링으로 인해 commit이 이루어진다.

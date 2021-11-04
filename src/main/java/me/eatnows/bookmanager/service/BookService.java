@@ -18,7 +18,7 @@ public class BookService {
 
     // 트랜잭션이 끝나야 COMMIT
     @Transactional
-    public void putBookAndAuthor() {
+    public void putBookAndAuthor() throws Exception {
         Book book = new Book();
         book.setName("JPA 시작하기");
 
@@ -28,5 +28,10 @@ public class BookService {
         author.setName("eatnows");
 
         authorRepository.save(author);
+
+        // RuntimeException 과 같은 UncheckedException 은 Transaction내에서 발생할 경우 rollback이 이루어진다.
+//        throw new RuntimeException("오류가 나서 DB commit이 발생하지 않습니다.");
+        // Exception 과 같은 CheckedException 은 Transaction내에서 발생할 경우 강제된 핸들링으로 인해 commit 된다.
+        throw new Exception("오류가 나서 DB commit이 발생하지 않습니다.");
     }
 }
