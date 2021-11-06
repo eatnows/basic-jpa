@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import me.eatnows.bookmanager.domain.listener.Auditable;
 import me.eatnows.bookmanager.domain.listener.MyEntityListener;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ import java.util.List;
 @ToString(callSuper = true) // 상속받은 클래스까지 toString 하고 EqualsAndHashCode하겠다는 의미
 @EqualsAndHashCode(callSuper = true)
 //@EntityListeners(value = AuditingEntityListener.class)
+//@DynamicUpdate
 public class Book extends BaseEntity {
 
     @Id

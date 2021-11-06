@@ -48,3 +48,17 @@ Transaction내에서 UncheckedException이 발생할 경우 rollback이 이루�
 
 ### Checked Exception (Exception)
 Transaction내에서 CheckedException이 발생할 경우 강제된 핸들링으로 인해 commit이 이루어진다.
+
+
+### Isolation
+level이 높아질 수록 격리단계가 강력해지고, 데이터의 정합성을 보장해준다. 하지만 동시처리능력이 떨어지게 되고 
+반대로 level이 낮아질 수록 동시처리능력은 향상되지만 일부 데이터의 정합성을 보장하지 못하는 경우가 발생할 수도 있다. 
+#### Default
+DB 기본 격리단계를 따라가는 것을 의미. (mysql의 경우 REPEATABLE_READ 단계)
+#### READ_UNCOMMITTED (level 0)
+
+#### READ_COMMITTED (level 1)
+
+#### REPEATABLE_READ (level 2)
+
+#### SERIALIZABLE (level 3)
