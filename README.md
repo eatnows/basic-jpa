@@ -60,5 +60,8 @@ DB 기본 격리단계를 따라가는 것을 의미. (mysql의 경우 REPEATABL
 #### READ_COMMITTED (level 1)
 
 #### REPEATABLE_READ (level 2)
-
+트랜잭션 내에 데이터가 변경되어도 스냅샷에 저장된 데이터를 계속 반환하여 트랜잭션 내에서 데이터가 변경되지 않는다.
+팬텀리드 현상이 발생할 수 있다.
 #### SERIALIZABLE (level 3)
+commit이 일어나지 않은 트랜잭션이 존재하게 되면 락을 통해서 웨이팅을 하게 된다.
+commit이 실행되어야만 추가적인 로직 진행을 하게 된다.

@@ -10,12 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+
 @Service
 @RequiredArgsConstructor
 public class BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final EntityManager entityManager;
 
     // put이라는 method에 진입하는순간 bean 내부로 들어왔고, (put이라는 bean)
     // bean 내부에 다른 method를 호출하게 되면 그 method에 있는 @transactional은 효과가 없다.
@@ -45,16 +48,21 @@ public class BookService {
 //        throw new Exception("오류가 나서 DB commit이 발생하지 않습니다.");
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void get(Long id) {
         System.out.println(">>> " + bookRepository.findById(id));
         System.out.println(">>> " + bookRepository.findAll());
 
+        entityManager.clear();
+
         System.out.println(">>> " + bookRepository.findById(id));
         System.out.println(">>> " + bookRepository.findAll());
 
-        Book book = bookRepository.findById(id).get();
-        book.setName("바뀔까?");
-        bookRepository.save(book);
+        bookRepository.update();
+
+        entityManager.clear();
+//        Book book = bookRepository.findById(id).get();
+//        book.setName("바뀔까?");
+//        bookRepository.save(book);
     }
 }
