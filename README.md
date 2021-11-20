@@ -65,3 +65,37 @@ DB 기본 격리단계를 따라가는 것을 의미. (mysql의 경우 REPEATABL
 #### SERIALIZABLE (level 3)
 commit이 일어나지 않은 트랜잭션이 존재하게 되면 락을 통해서 웨이팅을 하게 된다.
 commit이 실행되어야만 추가적인 로직 진행을 하게 된다.
+
+
+### 전파 옵션
+#### Propagation.REQUIRED
+따로 트랜잭션에 propagation을 설정하지 않으면 반영되는 기본값이다. <br>
+이미 트랜잭션이 설정되어있다면 그 트랜잭션을 사용하게 되고 트랜잭션이 없다면 새로 생성해서 사용한다.
+
+
+#### Propagation.REQUIRES_NEW
+무조건 새로운 트랜잭션을 생성하는 방식이다.
+
+#### Propagation.NESTED
+별도의 트랜잭션을 생성하는 것이 아니라 호출하는 쪽의 트랜잭션을 그대로 활용하게 된다.
+생성을 하는것은 아니지만 조금은 개별로 움직일 수 있는 약간은 분리되어 동작시킬 수 있다.
+
+
+#### Propagation.SUPPORTS
+호출하는 쪽에 트랜잭션이 있다면 해당 트랜잭션을 사용하게 된다. (재활용) <br>
+하지만 트랜잭션이 없다면 새로 생성하지 않고 트랜잭션이 없는 상태에서 처리하게 된다. 
+
+#### Propagation.NOT_SUPPORTS
+호출하는 쪽에 트랜잭션이 있다면 트랜잭션과 별개로 잠시 멈춘다.(해당 영역은 트랜잭션 없이 동작을 하도록 별개로 설정하게 된다)
+호출한쪽은 호출당한 쪽(트랜잭션이 없는 상태)에 동작이 끝난 이후에 동작하게된다. 
+
+#### Propagation.PROPAGATION_MANDATORY
+필수적으로 트랜잭션이 존재해야 한다. 이미 생성된 트랜잭션이 반드시 있어야하고 없으면 오류를 발생시킨다.
+
+#### Propagation.PROPAGATION_NEVER
+트랜잭션이 없어야한다. 이미 트랜잭션이 존재하게 된다면 오류를 발생 시킨다. 
+
+
+### @Transactional scope
+`@Transactional` 은 class와 method에 각각 선언해 줄 수 있는데, <br>
+class scope 는 각각 메서드에 대한 트랜잭션을 실행하겠다는 의미 class scope 보단 method scope이 선 적용이 된다.

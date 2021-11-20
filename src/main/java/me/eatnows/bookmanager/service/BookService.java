@@ -8,17 +8,20 @@ import me.eatnows.bookmanager.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
 @Service
 @RequiredArgsConstructor
+@Transactional // class scope
 public class BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final EntityManager entityManager;
+    private final AuthorService authorService;
 
     // put이라는 method에 진입하는순간 bean 내부로 들어왔고, (put이라는 bean)
     // bean 내부에 다른 method를 호출하게 되면 그 method에 있는 @transactional은 효과가 없다.
@@ -30,20 +33,27 @@ public class BookService {
     // @Transactional(rollbackFor = Exception.class) :  rollbackOn에 해당 Exception 클래스를 포함. 즉 Exception(checked exception) 이 발생해도 rollback이 일어난다.
     // 스프링 컨테이너는 빈으로 진입할때 @Transactional 처리하도록 되어있다.
     // 빈 클래스 내부에서 외부를 호출할 때는 @Transactional 효과가 없다.
-    @Transactional
+    @Transactional(propagation = Propagation.REQUIRED)
     public void putBookAndAuthor() {
         Book book = new Book();
         book.setName("JPA 시작하기");
 
         bookRepository.save(book);
 
-        Author author = new Author();
-        author.setName("eatnows");
+        try {
+            authorService.putAuthor();
+        } catch (RuntimeException e) {
 
-        authorRepository.save(author);
+        }
 
-        // RuntimeException 과 같은 UncheckedException 은 Transaction내에서 발생할 경우 rollback이 이루어진다.
-        throw new RuntimeException("오류가 나서 DB commit이 발생하지 않습니다.");
+//        Author author = new Author();
+//        author.setName("eatnows");
+//
+//        authorRepository.save(author);
+//
+        throw new RuntimeException("오류가 발생하였습니다. transaction은 어떻게 될까요");
+//        // RuntimeException 과 같은 UncheckedException 은 Transaction내에서 발생할 경우 rollback이 이루어진다.
+//        throw new RuntimeException("오류가 나서 DB commit이 발생하지 않습니다.");
         // Exception 과 같은 CheckedException 은 Transaction내에서 발생할 경우 강제된 핸들링으로 인해 commit 된다.
 //        throw new Exception("오류가 나서 DB commit이 발생하지 않습니다.");
     }
