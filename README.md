@@ -99,3 +99,15 @@ commit이 실행되어야만 추가적인 로직 진행을 하게 된다.
 ### @Transactional scope
 `@Transactional` 은 class와 method에 각각 선언해 줄 수 있는데, <br>
 class scope 는 각각 메서드에 대한 트랜잭션을 실행하겠다는 의미 class scope 보단 method scope이 선 적용이 된다.
+
+
+### Cascade (영속성 전이)
+
+#### DETACH
+영속성을 관리하지 않겠다. 연관관계를 맺고 있는 엔티티에 대해서도 DETACH가 된다.
+
+#### REFRESH
+엔티티를 다시 로드했을때 연관관계에 있는 엔티티 또한 재로드 하겠다라는 의미이다. 
+
+#### ALL
+모든 cascade 옵션을 허용한다.
