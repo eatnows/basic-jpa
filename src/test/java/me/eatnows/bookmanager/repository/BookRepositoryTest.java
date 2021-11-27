@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.Tuple;
 import java.time.LocalDateTime;
 
 @SpringBootTest
@@ -119,6 +120,18 @@ public class BookRepositoryTest {
                     LocalDateTime.now().minusDays(1L),
                     LocalDateTime.now().minusDays(1L)
             ));
+
+        System.out.println("findByNameRecently : " +
+                bookRepository.findByNameRecently(
+                        "JPA 강의",
+                        LocalDateTime.now().minusDays(1L),
+                        LocalDateTime.now().minusDays(1L)));
+
+        System.out.println(bookRepository.findBookNameAndCategory());
+
+        bookRepository.findBookNameAndCategory().forEach(tuple -> {
+            System.out.println(tuple.get(0) + " : " + tuple.get(1));
+        });
     }
 
     private void givenBookAndReview() {
