@@ -2,6 +2,8 @@ package me.eatnows.bookmanager.repository;
 
 import me.eatnows.bookmanager.domain.Book;
 import me.eatnows.bookmanager.repository.dto.BookNameAndCategory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -33,6 +35,9 @@ public interface BookRepository extends JpaRepository<Book, Long> {
             @Param("createdAt") LocalDateTime createdAt,
             @Param("updatedAt") LocalDateTime updatedAt);
 
-@Query(value = "select b.name as name, b.category as category from Book b ")
-List<Tuple> findBookNameAndCategory();
+    @Query(value = "select new me.eatnows.bookmanager.repository.dto.BookNameAndCategory(b.name, b.category) from Book b ")
+    List<BookNameAndCategory> findBookNameAndCategory();
+
+    @Query(value = "select new me.eatnows.bookmanager.repository.dto.BookNameAndCategory(b.name, b.category) from Book b ")
+    Page<BookNameAndCategory> findBookNameAndCategory(Pageable pageable);
 }

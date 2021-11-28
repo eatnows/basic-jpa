@@ -7,6 +7,7 @@ import me.eatnows.bookmanager.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Tuple;
@@ -129,9 +130,19 @@ public class BookRepositoryTest {
 
         System.out.println(bookRepository.findBookNameAndCategory());
 
-        bookRepository.findBookNameAndCategory().forEach(tuple -> {
-            System.out.println(tuple.get(0) + " : " + tuple.get(1));
+//        bookRepository.findBookNameAndCategory().forEach(tuple -> {
+//            System.out.println(tuple.get(0) + " : " + tuple.get(1));
+//        });
+
+        bookRepository.findBookNameAndCategory().forEach(b -> {
+            System.out.println(b.getName() + " : " + b.getCategory());
         });
+
+        bookRepository.findBookNameAndCategory(PageRequest.of(1, 1)).forEach(
+                bookNameAndCategory -> System.out.println(bookNameAndCategory.getName() + " : " + bookNameAndCategory.getCategory()));
+
+        bookRepository.findBookNameAndCategory(PageRequest.of(0, 1)).forEach(
+                bookNameAndCategory -> System.out.println(bookNameAndCategory.getName() + " : " + bookNameAndCategory.getCategory()));
     }
 
     private void givenBookAndReview() {
